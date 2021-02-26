@@ -16,7 +16,7 @@ export default function Home({ items }: HomeProps) {
       <main>
         <h1>Hello</h1>
         {items.map(item => (
-          <p key={item.name}>{item.name}</p>
+          <p key={item.id}>{item.title}</p>
         ))}
       </main>
     </>

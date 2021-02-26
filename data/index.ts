@@ -2,12 +2,15 @@ import { Item } from '../interfaces';
 
 export const items: Item[] = [
   {
-    name: 'sample1',
+    id: 1,
+    title: 'sample1',
   },
   {
-    name: 'sample2',
+    id: 2,
+    title: 'sample2',
   },
   {
-    name: 'sample3',
+    id: 3,
+    title: 'sample3',
   },
 ];
