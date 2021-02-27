@@ -1,6 +1,5 @@
 import Head from 'next/head';
 import { Item } from '../interfaces';
-import firebase from '../firebase/index';
 
 interface HomeProps {
   items: Item[];
@@ -23,14 +22,8 @@ export default function Home({ items }: HomeProps) {
   );
 }
 
-export async function getStaticProps() {
-  const db = firebase.firestore();
-  const itemsCollection = db.collection('items');
-  const snapshot = await itemsCollection.get();
-  const items = snapshot.docs.map(doc => {
-    const data = doc.data();
-    return { id: doc.id, title: data.title } as Item;
-  });
-
+export async function getServerSideProps() {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/items`);
+  const items = await res.json();
   return { props: { items } };
 }
