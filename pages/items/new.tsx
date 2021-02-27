@@ -1,6 +1,5 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import Head from 'next/head';
-import firebase from '../../firebase/index';
 
 export default function NewItem() {
   const [title, setTitle] = useState<string>('');
@@ -12,15 +11,10 @@ export default function NewItem() {
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log({ title });
-    const db = firebase.firestore();
-    const itemsCollection = db.collection('items');
-    try {
-      const doc = await itemsCollection.add({ title });
-      const snapshot = await doc.get();
-      console.log({ id: snapshot.id, ...snapshot.data() });
-    } catch (error) {
-      alert(error.message);
-    }
+    await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/items`, {
+      method: 'POST',
+      body: JSON.stringify({ title }),
+    });
   };
   return (
     <>
