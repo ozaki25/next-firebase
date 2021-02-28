@@ -17,8 +17,7 @@ async function get(req: NextApiRequest, res: NextApiResponse<Item[]>) {
   const snapshot = await db.collection('items').get();
 
   const items = snapshot.docs.map(doc => {
-    const data = doc.data();
-    return { id: doc.id, title: data.title } as Item;
+    return { id: doc.id, ...doc.data() } as Item;
   });
   console.log({ items });
 
@@ -29,7 +28,12 @@ async function post(req: NextApiRequest, res: NextApiResponse<Item>) {
   console.log({ body: req.body });
   const body = JSON.parse(req.body) as Item;
   const db = firebase.firestore();
-  const doc = await db.collection('items').add(body);
+  const doc = await db
+    .collection('items')
+    .add({
+      ...body,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+    });
 
   const snapshot = await doc.get();
   const item = { id: snapshot.id, ...snapshot.data() } as Item;
