@@ -1,4 +1,7 @@
 export interface Item {
-  id: string;
+  id?: string;
   title: string;
+  url: string;
+  flag1: boolean;
+  flag2: boolean;
 }
