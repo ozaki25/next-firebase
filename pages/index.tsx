@@ -15,7 +15,11 @@ export default function Home({ items }: HomeProps) {
       <main>
         <h1>Hello</h1>
         {items.map(item => (
-          <p key={item.id}>{item.title}</p>
+          <p key={item.id}>
+            <a href={item.url}>{item.title}</a>
+            {item.flag1 ? '○' : 'x'}
+            {item.flag2 ? '○' : 'x'}
+          </p>
         ))}
       </main>
     </>
