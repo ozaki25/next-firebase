@@ -28,6 +28,8 @@ export default function NewItem() {
       method: 'POST',
       body: JSON.stringify(item),
     });
+    alert(`success!${JSON.stringify(item)}`);
+    setItem(defaultItem);
   };
   return (
     <>
