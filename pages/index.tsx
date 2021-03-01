@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import { Container } from '@material-ui/core';
 import { Item } from '../interfaces';
 
 interface HomeProps {
@@ -10,10 +11,8 @@ export default function Home({ items }: HomeProps) {
     <>
       <Head>
         <title>Home</title>
-        <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
-        <h1>Hello</h1>
+      <Container component="main" maxWidth="md">
         {items.map(item => (
           <p key={item.id}>
             <a href={item.url}>{item.title}</a>
@@ -21,7 +20,7 @@ export default function Home({ items }: HomeProps) {
             {item.flag2 ? '○' : 'x'}
           </p>
         ))}
-      </main>
+      </Container>
     </>
   );
 }
