@@ -23,7 +23,7 @@ export default function Home({ items }: HomeProps) {
       </Head>
       <Container component="main" maxWidth="sm" disableGutters={true}>
         <TableContainer component={Paper}>
-          <Table>
+          <Table size="small">
             <TableHead>
               <TableRow>
                 <TableCell>Title</TableCell>
@@ -33,7 +33,7 @@ export default function Home({ items }: HomeProps) {
             </TableHead>
             <TableBody>
               {items.map(item => (
-                <TableRow key={item.id}>
+                <TableRow key={item.id} hover={true}>
                   <TableCell>
                     <a href={item.url}>{item.title}</a>
                   </TableCell>
