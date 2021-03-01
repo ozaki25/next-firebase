@@ -9,6 +9,7 @@ import {
   TableHead,
   TableRow,
 } from '@material-ui/core';
+import { Check, Clear } from '@material-ui/icons';
 import { Item } from '../interfaces';
 
 interface HomeProps {
@@ -37,8 +38,20 @@ export default function Home({ items }: HomeProps) {
                   <TableCell>
                     <a href={item.url}>{item.title}</a>
                   </TableCell>
-                  <TableCell>{item.flag1 ? '✓' : '☓'}</TableCell>
-                  <TableCell>{item.flag2 ? '✓' : '☓'}</TableCell>
+                  <TableCell>
+                    {item.flag1 ? (
+                      <Check color="primary" fontSize="large" />
+                    ) : (
+                      <Clear color="action" fontSize="large" />
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    {item.flag2 ? (
+                      <Check color="primary" fontSize="large" />
+                    ) : (
+                      <Clear color="action" fontSize="large" />
+                    )}
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
