@@ -1,6 +1,9 @@
 import Head from 'next/head';
 import {
   Container,
+  createStyles,
+  Fab,
+  makeStyles,
   Paper,
   Table,
   TableBody,
@@ -8,15 +11,27 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Theme,
 } from '@material-ui/core';
-import { Check, Clear } from '@material-ui/icons';
+import { Add, Check, Clear } from '@material-ui/icons';
 import { Item } from '../interfaces';
 
 interface HomeProps {
   items: Item[];
 }
 
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    fab: {
+      position: 'fixed',
+      bottom: theme.spacing(2),
+      right: theme.spacing(2),
+    },
+  }),
+);
+
 export default function Home({ items }: HomeProps) {
+  const classes = useStyles();
   return (
     <>
       <Head>
@@ -57,6 +72,9 @@ export default function Home({ items }: HomeProps) {
             </TableBody>
           </Table>
         </TableContainer>
+        <Fab color="primary" aria-label="add" className={classes.fab}>
+          <Add />
+        </Fab>
       </Container>
     </>
   );
