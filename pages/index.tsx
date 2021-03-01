@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import Link from 'next/link';
 import {
   Container,
   createStyles,
@@ -72,9 +73,11 @@ export default function Home({ items }: HomeProps) {
             </TableBody>
           </Table>
         </TableContainer>
-        <Fab color="primary" aria-label="add" className={classes.fab}>
-          <Add />
-        </Fab>
+        <Link href="/items/new" passHref>
+          <Fab color="primary" aria-label="add" className={classes.fab}>
+            <Add />
+          </Fab>
+        </Link>
       </Container>
     </>
   );
