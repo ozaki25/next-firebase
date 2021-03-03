@@ -1,5 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import Head from 'next/head';
+import Link from 'next/link';
 import {
   Box,
   Button,
@@ -103,6 +104,9 @@ export default function NewItem() {
             </form>
           </Box>
         </Paper>
+        <Link href="/" passHref>
+          <Button>一覧へ</Button>
+        </Link>
       </Container>
     </>
   );
