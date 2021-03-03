@@ -1,5 +1,15 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import Head from 'next/head';
+import {
+  Box,
+  Button,
+  Checkbox,
+  Container,
+  FormControlLabel,
+  FormGroup,
+  Paper,
+  TextField,
+} from '@material-ui/core';
 import { Item } from '../../interfaces';
 
 const defaultItem = {
@@ -35,52 +45,65 @@ export default function NewItem() {
     <>
       <Head>
         <title>New Item</title>
-        <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
-        <h1>New Item</h1>
-        <form onSubmit={onSubmit}>
-          <p>
-            <label htmlFor="title">タイトル</label>
-            <input
-              id="title"
-              name="title"
-              value={item.title}
-              onChange={onChangeText}
-            />
-          </p>
-          <p>
-            <label htmlFor="url">URL</label>
-            <input
-              id="url"
-              name="url"
-              value={item.url}
-              onChange={onChangeText}
-            />
-          </p>
-          <p>
-            <label htmlFor="flag1">フラグ1</label>
-            <input
-              id="flag1"
-              name="flag1"
-              type="checkbox"
-              checked={item.flag1}
-              onChange={onChangeRadio}
-            />
-          </p>
-          <p>
-            <label htmlFor="flag2">フラグ2</label>
-            <input
-              id="flag2"
-              name="flag2"
-              type="checkbox"
-              checked={item.flag2}
-              onChange={onChangeRadio}
-            />
-          </p>
-          <button>追加</button>
-        </form>
-      </main>
+      <Container component="main" maxWidth="sm">
+        <Paper>
+          <Box p={2}>
+            <form onSubmit={onSubmit}>
+              <FormGroup>
+                <TextField
+                  id="title"
+                  name="title"
+                  value={item.title}
+                  label="タイトル"
+                  onChange={onChangeText}
+                  fullWidth
+                  required
+                />
+                <TextField
+                  id="url"
+                  name="url"
+                  value={item.url}
+                  label="URL"
+                  onChange={onChangeText}
+                  fullWidth
+                  required
+                />
+                <FormControlLabel
+                  label="フラグ1"
+                  control={
+                    <Checkbox
+                      id="flag1"
+                      name="flag1"
+                      checked={item.flag1}
+                      onChange={onChangeRadio}
+                    />
+                  }
+                />
+                <FormControlLabel
+                  label="フラグ2"
+                  control={
+                    <Checkbox
+                      id="flag2"
+                      name="flag2"
+                      checked={item.flag2}
+                      onChange={onChangeRadio}
+                    />
+                  }
+                />
+              </FormGroup>
+              <Button
+                type="submit"
+                color="primary"
+                variant="contained"
+                fullWidth
+              >
+                作成
+              </Button>
+            </form>
+          </Box>
+        </Paper>
+      </Container>
     </>
   );
 }
