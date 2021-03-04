@@ -6,6 +6,7 @@ export default async function (
   req: NextApiRequest,
   res: NextApiResponse<Item[] | Item | string>,
 ) {
+  console.time('all');
   console.log(req.method, req.url);
   if (req.method === 'GET') return get(req, res);
   if (req.method === 'POST') return post(req, res);
@@ -14,17 +15,20 @@ export default async function (
 
 async function get(req: NextApiRequest, res: NextApiResponse<Item[]>) {
   const db = firebase.firestore();
+  console.time('firestore');
   const snapshot = await db
     .collection('items')
     .orderBy('flag1', 'desc')
     .orderBy('flag2', 'desc')
     .orderBy('title')
     .get();
+  console.timeEnd('firestore');
 
   const items = snapshot.docs.map(doc => {
     return { id: doc.id, ...doc.data() } as Item;
   });
   console.log({ items });
+  console.timeEnd('all');
 
   res.status(200).json(items);
 }
