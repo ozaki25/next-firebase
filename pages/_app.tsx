@@ -28,6 +28,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
+        <meta name="theme-color" content="#00dc65" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <CssBaseline />
