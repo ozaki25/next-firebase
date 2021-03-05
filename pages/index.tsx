@@ -1,25 +1,18 @@
-import { MouseEvent } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import {
   Container,
   createStyles,
   Fab,
-  IconButton,
   makeStyles,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
   Theme,
 } from '@material-ui/core';
-import { Add, Check, Clear, SwapVert } from '@material-ui/icons';
+import { Add } from '@material-ui/icons';
+
+import ItemsTable from '../components/ItemsTable';
 import { Item } from '../interfaces';
 
-interface HomeProps {
+interface Props {
   items: Item[];
 }
 
@@ -33,61 +26,16 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export default function Home({ items }: HomeProps) {
+export default function Home({ items }: Props) {
   const classes = useStyles();
-  const onClickSwap = (event: MouseEvent<HTMLButtonElement>) => {
-    alert();
-  };
+
   return (
     <>
       <Head>
         <title>Home</title>
       </Head>
       <Container component="main" maxWidth="sm" disableGutters={true}>
-        <TableContainer component={Paper}>
-          <Table size="small">
-            <TableHead>
-              <TableRow>
-                <TableCell>Title</TableCell>
-                <TableCell align="center">1</TableCell>
-                <TableCell align="center">2</TableCell>
-                <TableCell></TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {items.map(item => (
-                <TableRow key={item.id} hover={true}>
-                  <TableCell>
-                    <a href={item.url}>{item.title}</a>
-                  </TableCell>
-                  <TableCell align="center" padding="none">
-                    {item.flag1 ? (
-                      <Check color="primary" />
-                    ) : (
-                      <Clear color="action" />
-                    )}
-                  </TableCell>
-                  <TableCell align="center" padding="none">
-                    {item.flag2 ? (
-                      <Check color="primary" />
-                    ) : (
-                      <Clear color="action" />
-                    )}
-                  </TableCell>
-                  <TableCell align="center" padding="none">
-                    <IconButton
-                      aria-label="swap"
-                      size="small"
-                      onClick={onClickSwap}
-                    >
-                      <SwapVert />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+        <ItemsTable items={items} />
         <Link href="/items/new" passHref>
           <Fab color="primary" aria-label="add" className={classes.fab}>
             <Add />
