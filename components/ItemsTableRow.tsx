@@ -44,8 +44,12 @@ export default function TableItem({ item }: Props) {
             </IconButton>
           </TableCell>
           <TableCell align="center" padding="none">
-            <IconButton aria-label="cancel" size="small">
-              <CancelOutlined onClick={onClickSwapCancel} />
+            <IconButton
+              aria-label="cancel"
+              size="small"
+              onClick={onClickSwapCancel}
+            >
+              <CancelOutlined />
             </IconButton>
           </TableCell>
         </>
