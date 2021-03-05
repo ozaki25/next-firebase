@@ -4,6 +4,7 @@ import {
   Container,
   createStyles,
   Fab,
+  IconButton,
   makeStyles,
   Paper,
   Table,
@@ -14,7 +15,7 @@ import {
   TableRow,
   Theme,
 } from '@material-ui/core';
-import { Add, Check, Clear } from '@material-ui/icons';
+import { Add, Check, Clear, SwapVert } from '@material-ui/icons';
 import { Item } from '../interfaces';
 
 interface HomeProps {
@@ -46,6 +47,7 @@ export default function Home({ items }: HomeProps) {
                 <TableCell>Title</TableCell>
                 <TableCell align="center">1</TableCell>
                 <TableCell align="center">2</TableCell>
+                <TableCell></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -67,6 +69,11 @@ export default function Home({ items }: HomeProps) {
                     ) : (
                       <Clear color="action" />
                     )}
+                  </TableCell>
+                  <TableCell align="center" padding="none">
+                    <IconButton aria-label="swap" size="small">
+                      <SwapVert />
+                    </IconButton>
                   </TableCell>
                 </TableRow>
               ))}
