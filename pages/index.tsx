@@ -44,8 +44,8 @@ export default function Home({ items }: HomeProps) {
             <TableHead>
               <TableRow>
                 <TableCell>Title</TableCell>
-                <TableCell>Flag1</TableCell>
-                <TableCell>Flag2</TableCell>
+                <TableCell align="center">1</TableCell>
+                <TableCell align="center">2</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -54,18 +54,18 @@ export default function Home({ items }: HomeProps) {
                   <TableCell>
                     <a href={item.url}>{item.title}</a>
                   </TableCell>
-                  <TableCell>
+                  <TableCell align="center" padding="none">
                     {item.flag1 ? (
-                      <Check color="primary" fontSize="large" />
+                      <Check color="primary" />
                     ) : (
-                      <Clear color="action" fontSize="large" />
+                      <Clear color="action" />
                     )}
                   </TableCell>
-                  <TableCell>
+                  <TableCell align="center" padding="none">
                     {item.flag2 ? (
-                      <Check color="primary" fontSize="large" />
+                      <Check color="primary" />
                     ) : (
-                      <Clear color="action" fontSize="large" />
+                      <Clear color="action" />
                     )}
                   </TableCell>
                 </TableRow>
