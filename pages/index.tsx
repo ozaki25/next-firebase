@@ -1,3 +1,4 @@
+import { MouseEvent } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import {
@@ -34,6 +35,9 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function Home({ items }: HomeProps) {
   const classes = useStyles();
+  const onClickSwap = (event: MouseEvent<HTMLButtonElement>) => {
+    alert();
+  };
   return (
     <>
       <Head>
@@ -71,7 +75,11 @@ export default function Home({ items }: HomeProps) {
                     )}
                   </TableCell>
                   <TableCell align="center" padding="none">
-                    <IconButton aria-label="swap" size="small">
+                    <IconButton
+                      aria-label="swap"
+                      size="small"
+                      onClick={onClickSwap}
+                    >
                       <SwapVert />
                     </IconButton>
                   </TableCell>
