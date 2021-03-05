@@ -27,7 +27,7 @@ export default function TableItem({ item }: Props) {
   };
 
   return (
-    <TableRow hover={true}>
+    <TableRow hover={true} selected={isEditting}>
       <TableCell>
         <a href={item.url}>{item.title}</a>
       </TableCell>
