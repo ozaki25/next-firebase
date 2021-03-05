@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   Paper,
   Table,
@@ -15,7 +16,25 @@ interface Props {
   items: Item[];
 }
 
-function ItemsTable({ items }: Props) {
+function ItemsTable({ items: defaultItems }: Props) {
+  const [items, setItems] = useState<Item[]>(defaultItems);
+
+  const swapUp = (item: Item) => {
+    const i = items.findIndex(({ id }) => item.id === id);
+    if ([-1, 0].includes(i)) return;
+    const newItems = [...items];
+    [newItems[i], newItems[i - 1]] = [items[i - 1], items[i]];
+    setItems(newItems);
+  };
+
+  const swapDown = (item: Item) => {
+    const i = items.findIndex(({ id }) => item.id === id);
+    if ([-1, items.length - 1].includes(i)) return;
+    const newItems = [...items];
+    [newItems[i], newItems[i + 1]] = [items[i + 1], items[i]];
+    setItems(newItems);
+  };
+
   return (
     <TableContainer component={Paper}>
       <Table size="small">
@@ -29,7 +48,12 @@ function ItemsTable({ items }: Props) {
         </TableHead>
         <TableBody>
           {items.map(item => (
-            <ItemsTableRow key={item.id} item={item} />
+            <ItemsTableRow
+              key={item.id}
+              item={item}
+              swapUp={swapUp}
+              swapDown={swapDown}
+            />
           ))}
         </TableBody>
       </Table>

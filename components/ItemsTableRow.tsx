@@ -13,9 +13,11 @@ import { Item } from '../interfaces';
 
 interface Props {
   item: Item;
+  swapUp: (item: Item) => void;
+  swapDown: (item: Item) => void;
 }
 
-export default function TableItem({ item }: Props) {
+export default function TableItem({ item, swapUp, swapDown }: Props) {
   const [isEditting, setIsEditing] = useState<boolean>(false);
 
   const onClickSwapStart = (event: MouseEvent<HTMLButtonElement>) => {
@@ -26,6 +28,14 @@ export default function TableItem({ item }: Props) {
     setIsEditing(false);
   };
 
+  const onClickSwapUp = (event: MouseEvent<HTMLButtonElement>) => {
+    swapUp(item);
+  };
+
+  const onClickSwapDown = (event: MouseEvent<HTMLButtonElement>) => {
+    swapDown(item);
+  };
+
   return (
     <TableRow hover={true} selected={isEditting}>
       <TableCell>
@@ -34,12 +44,20 @@ export default function TableItem({ item }: Props) {
       {isEditting ? (
         <>
           <TableCell align="center" padding="none">
-            <IconButton aria-label="swap up" size="small">
+            <IconButton
+              aria-label="swap up"
+              size="small"
+              onClick={onClickSwapUp}
+            >
               <ArrowUpward color="secondary" />
             </IconButton>
           </TableCell>
           <TableCell align="center" padding="none">
-            <IconButton aria-label="swap down" size="small">
+            <IconButton
+              aria-label="swap down"
+              size="small"
+              onClick={onClickSwapDown}
+            >
               <ArrowDownward color="secondary" />
             </IconButton>
           </TableCell>
