@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import firebase from '../../firebase';
-import { Item } from '../../interfaces';
+import { Item, ItemsOrder } from '../../interfaces';
 
 export default async function (
   req: NextApiRequest,
@@ -23,6 +23,9 @@ async function get(req: NextApiRequest, res: NextApiResponse<Item[]>) {
     .orderBy('title')
     .get();
   console.timeEnd('firestore');
+
+  const itemsOrder = await getItemsOrder(db);
+  console.log(itemsOrder.order);
 
   const items = snapshot.docs.map(doc => {
     return { id: doc.id, ...doc.data() } as Item;
@@ -47,4 +50,9 @@ async function post(req: NextApiRequest, res: NextApiResponse<Item>) {
   console.log({ item });
 
   res.status(200).json(item);
+}
+
+async function getItemsOrder(db: FirebaseFirestore.Firestore) {
+  const snapshot = await db.collection('items-order').doc('1').get();
+  return snapshot.data() as ItemsOrder;
 }
