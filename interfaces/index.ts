@@ -5,3 +5,7 @@ export interface Item {
   flag1: boolean;
   flag2: boolean;
 }
+
+export interface ItemsOrder {
+  order: string[];
+}
