@@ -15,16 +15,20 @@ export default async function (
 
 async function get(req: NextApiRequest, res: NextApiResponse<Item[]>) {
   const db = firebase.firestore();
+  const [items, itemsOrder] = await Promise.all([
+    getItems(db),
+    getItemsOrder(db),
+  ]);
 
-  const itemsOrder = await getItemsOrder(db);
-  console.log(itemsOrder.order);
-
-  const items = await getItems(db);
-  console.log({ items });
+  const orderedItems = itemsOrder.order
+    .map(id => {
+      return items.find(item => item.id === id);
+    })
+    .filter(Boolean) as Item[];
 
   console.timeEnd('all');
 
-  res.status(200).json(items);
+  res.status(200).json(orderedItems);
 }
 
 async function post(req: NextApiRequest, res: NextApiResponse<Item>) {
@@ -44,19 +48,20 @@ async function post(req: NextApiRequest, res: NextApiResponse<Item>) {
 }
 
 async function getItems(db: FirebaseFirestore.Firestore) {
-  console.time('firestore');
+  console.time('firestore:getItems');
   const snapshot = await db
     .collection('items')
     .orderBy('flag1', 'desc')
     .orderBy('flag2', 'desc')
     .orderBy('title')
     .get();
+  console.timeEnd('firestore:getItems');
   return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Item));
 }
 
 async function getItemsOrder(db: FirebaseFirestore.Firestore) {
-  console.time('firestore');
+  console.time('firestore:getItemsOrder');
   const snapshot = await db.collection('items-order').doc('1').get();
-  console.timeEnd('firestore');
+  console.timeEnd('firestore:getItemsOrder');
   return snapshot.data() as ItemsOrder;
 }
