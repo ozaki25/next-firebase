@@ -13,19 +13,29 @@ import { Item } from '../interfaces';
 
 interface Props {
   item: Item;
+  startEdit: () => void;
+  endEdit: () => void;
   swapUp: (item: Item) => void;
   swapDown: (item: Item) => void;
 }
 
-export default function TableItem({ item, swapUp, swapDown }: Props) {
+export default function TableItem({
+  item,
+  startEdit,
+  endEdit,
+  swapUp,
+  swapDown,
+}: Props) {
   const [isEditting, setIsEditing] = useState<boolean>(false);
 
   const onClickSwapStart = (event: MouseEvent<HTMLButtonElement>) => {
     setIsEditing(true);
+    startEdit();
   };
 
   const onClickSubmit = (event: MouseEvent<HTMLButtonElement>) => {
     setIsEditing(false);
+    endEdit();
   };
 
   const onClickSwapUp = (event: MouseEvent<HTMLButtonElement>) => {

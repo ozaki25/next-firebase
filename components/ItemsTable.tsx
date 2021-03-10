@@ -18,21 +18,34 @@ interface Props {
 
 function ItemsTable({ items: defaultItems }: Props) {
   const [items, setItems] = useState<Item[]>(defaultItems);
+  const [tmpItems, setTmpItems] = useState<Item[]>([]);
+  const [isEditting, setIsEditing] = useState<boolean>(false);
+
+  const startEdit = () => {
+    setIsEditing(true);
+    setTmpItems(items);
+  };
+
+  const endEdit = () => {
+    setIsEditing(false);
+    setItems(tmpItems);
+    setTmpItems([]);
+  };
 
   const swapUp = (item: Item) => {
-    const i = items.findIndex(({ id }) => item.id === id);
+    const i = tmpItems.findIndex(({ id }) => item.id === id);
     if ([-1, 0].includes(i)) return;
-    const newItems = [...items];
-    [newItems[i], newItems[i - 1]] = [items[i - 1], items[i]];
-    setItems(newItems);
+    const newItems = [...tmpItems];
+    [newItems[i], newItems[i - 1]] = [tmpItems[i - 1], tmpItems[i]];
+    setTmpItems(newItems);
   };
 
   const swapDown = (item: Item) => {
-    const i = items.findIndex(({ id }) => item.id === id);
-    if ([-1, items.length - 1].includes(i)) return;
-    const newItems = [...items];
-    [newItems[i], newItems[i + 1]] = [items[i + 1], items[i]];
-    setItems(newItems);
+    const i = tmpItems.findIndex(({ id }) => item.id === id);
+    if ([-1, tmpItems.length - 1].includes(i)) return;
+    const newItems = [...tmpItems];
+    [newItems[i], newItems[i + 1]] = [tmpItems[i + 1], tmpItems[i]];
+    setTmpItems(newItems);
   };
 
   return (
@@ -47,10 +60,12 @@ function ItemsTable({ items: defaultItems }: Props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {items.map(item => (
+          {(isEditting ? tmpItems : items).map(item => (
             <ItemsTableRow
               key={item.id}
               item={item}
+              startEdit={startEdit}
+              endEdit={endEdit}
               swapUp={swapUp}
               swapDown={swapDown}
             />
