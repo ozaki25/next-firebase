@@ -26,10 +26,20 @@ function ItemsTable({ items: defaultItems }: Props) {
     setTmpItems(items);
   };
 
-  const endEdit = () => {
-    setIsEditing(false);
-    setItems(tmpItems);
-    setTmpItems([]);
+  const endEdit = async () => {
+    const ids = tmpItems.map(({ id }) => id);
+    try {
+      await fetch('/api/items-order', {
+        method: 'POST',
+        body: JSON.stringify(ids),
+      });
+      setItems(tmpItems);
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setIsEditing(false);
+      setTmpItems([]);
+    }
   };
 
   const swapUp = (item: Item) => {
