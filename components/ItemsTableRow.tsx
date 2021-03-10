@@ -3,8 +3,8 @@ import { IconButton, TableCell, TableRow } from '@material-ui/core';
 import {
   ArrowDownward,
   ArrowUpward,
-  CancelOutlined,
   Check,
+  CheckCircle,
   Clear,
   SwapVert,
 } from '@material-ui/icons';
@@ -24,7 +24,7 @@ export default function TableItem({ item, swapUp, swapDown }: Props) {
     setIsEditing(true);
   };
 
-  const onClickSwapCancel = (event: MouseEvent<HTMLButtonElement>) => {
+  const onClickSubmit = (event: MouseEvent<HTMLButtonElement>) => {
     setIsEditing(false);
   };
 
@@ -63,11 +63,11 @@ export default function TableItem({ item, swapUp, swapDown }: Props) {
           </TableCell>
           <TableCell align="center" padding="none">
             <IconButton
-              aria-label="cancel"
+              aria-label="submit"
               size="small"
-              onClick={onClickSwapCancel}
+              onClick={onClickSubmit}
             >
-              <CancelOutlined />
+              <CheckCircle color="primary" />
             </IconButton>
           </TableCell>
         </>
