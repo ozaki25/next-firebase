@@ -64,6 +64,7 @@ function ItemsTable({ items: defaultItems }: Props) {
             <ItemsTableRow
               key={item.id}
               item={item}
+              editable={!isEditting}
               startEdit={startEdit}
               endEdit={endEdit}
               swapUp={swapUp}

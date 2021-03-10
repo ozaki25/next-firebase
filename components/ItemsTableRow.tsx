@@ -13,6 +13,7 @@ import { Item } from '../interfaces';
 
 interface Props {
   item: Item;
+  editable: boolean;
   startEdit: () => void;
   endEdit: () => void;
   swapUp: (item: Item) => void;
@@ -21,6 +22,7 @@ interface Props {
 
 export default function TableItem({
   item,
+  editable,
   startEdit,
   endEdit,
   swapUp,
@@ -90,13 +92,15 @@ export default function TableItem({
             {item.flag2 ? <Check color="primary" /> : <Clear color="action" />}
           </TableCell>
           <TableCell align="center" padding="none">
-            <IconButton
-              aria-label="swap"
-              size="small"
-              onClick={onClickSwapStart}
-            >
-              <SwapVert />
-            </IconButton>
+            {editable && (
+              <IconButton
+                aria-label="swap"
+                size="small"
+                onClick={onClickSwapStart}
+              >
+                <SwapVert />
+              </IconButton>
+            )}
           </TableCell>
         </>
       )}
