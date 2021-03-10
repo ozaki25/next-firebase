@@ -18,6 +18,9 @@ interface Props {
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    container: {
+      'margin-bottom': theme.spacing(12),
+    },
     fab: {
       position: 'fixed',
       bottom: theme.spacing(2),
@@ -34,7 +37,12 @@ export default function Home({ items }: Props) {
       <Head>
         <title>Home</title>
       </Head>
-      <Container component="main" maxWidth="sm" disableGutters={true}>
+      <Container
+        component="main"
+        maxWidth="sm"
+        disableGutters={true}
+        className={classes.container}
+      >
         <ItemsTable items={items} />
         <Link href="/items/new" passHref>
           <Fab color="primary" aria-label="add" className={classes.fab}>
