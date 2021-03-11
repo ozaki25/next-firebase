@@ -19,6 +19,7 @@ async function get(req: NextApiRequest, res: NextApiResponse<Item[]>) {
     getItems(db),
     getItemsOrder(db),
   ]);
+  console.log(items.map(({ id, title }) => ({ id, title })));
 
   const orderedItems = itemsOrder.order
     .map(id => {
@@ -41,7 +42,17 @@ async function post(req: NextApiRequest, res: NextApiResponse<Item>) {
   });
 
   const snapshot = await doc.get();
-  const item = { id: snapshot.id, ...snapshot.data() } as Item;
+  const { id } = snapshot;
+
+  const itemsOrder = await getItemsOrder(db);
+  await db
+    .collection('items-order')
+    .doc('1')
+    .set({
+      order: [...itemsOrder.order, id],
+    });
+
+  const item = { id, ...snapshot.data() } as Item;
   console.log({ item });
 
   res.status(200).json(item);
