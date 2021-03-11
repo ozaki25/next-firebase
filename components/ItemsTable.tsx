@@ -63,16 +63,18 @@ function ItemsTable({ items: defaultItems }: Props) {
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell>Title</TableCell>
+            <TableCell>#</TableCell>
+            <TableCell padding="none">Title</TableCell>
             <TableCell align="center">1</TableCell>
             <TableCell align="center">2</TableCell>
             <TableCell></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {(isEditting ? tmpItems : items).map(item => (
+          {(isEditting ? tmpItems : items).map((item, i) => (
             <ItemsTableRow
               key={item.id}
+              index={i + 1}
               item={item}
               editable={!isEditting}
               startEdit={startEdit}

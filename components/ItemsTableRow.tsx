@@ -12,6 +12,7 @@ import {
 import { Item } from '../interfaces';
 
 interface Props {
+  index: number;
   item: Item;
   editable: boolean;
   startEdit: () => void;
@@ -21,6 +22,7 @@ interface Props {
 }
 
 export default function TableItem({
+  index,
   item,
   editable,
   startEdit,
@@ -50,7 +52,8 @@ export default function TableItem({
 
   return (
     <TableRow hover={true} selected={isEditting}>
-      <TableCell>
+      <TableCell>{index}</TableCell>
+      <TableCell padding="none">
         <a href={item.url}>{item.title}</a>
       </TableCell>
       {isEditting ? (
