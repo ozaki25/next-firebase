@@ -88,7 +88,7 @@ export default function TableItem({
         </>
       ) : (
         <>
-          <TableCell align="center" padding="none" align="right" colSpan={3}>
+          <TableCell align="right" padding="none" colSpan={3}>
             {editable && (
               <IconButton
                 aria-label="swap"
