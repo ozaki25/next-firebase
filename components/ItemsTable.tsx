@@ -65,8 +65,8 @@ function ItemsTable({ items: defaultItems }: Props) {
           <TableRow>
             <TableCell>#</TableCell>
             <TableCell padding="none">Title</TableCell>
-            <TableCell align="center">1</TableCell>
-            <TableCell align="center">2</TableCell>
+            <TableCell></TableCell>
+            <TableCell></TableCell>
             <TableCell></TableCell>
           </TableRow>
         </TableHead>

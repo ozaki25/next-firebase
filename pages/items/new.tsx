@@ -16,8 +16,6 @@ import { Item } from '../../interfaces';
 const defaultItem = {
   title: '',
   url: '',
-  flag1: false,
-  flag2: false,
 };
 
 export default function NewItem() {
@@ -69,28 +67,6 @@ export default function NewItem() {
                   onChange={onChangeText}
                   fullWidth
                   required
-                />
-                <FormControlLabel
-                  label="フラグ1"
-                  control={
-                    <Checkbox
-                      id="flag1"
-                      name="flag1"
-                      checked={item.flag1}
-                      onChange={onChangeRadio}
-                    />
-                  }
-                />
-                <FormControlLabel
-                  label="フラグ2"
-                  control={
-                    <Checkbox
-                      id="flag2"
-                      name="flag2"
-                      checked={item.flag2}
-                      onChange={onChangeRadio}
-                    />
-                  }
                 />
               </FormGroup>
               <Button

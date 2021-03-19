@@ -88,13 +88,7 @@ export default function TableItem({
         </>
       ) : (
         <>
-          <TableCell align="center" padding="none">
-            {item.flag1 ? <Check color="primary" /> : <Clear color="action" />}
-          </TableCell>
-          <TableCell align="center" padding="none">
-            {item.flag2 ? <Check color="primary" /> : <Clear color="action" />}
-          </TableCell>
-          <TableCell align="center" padding="none">
+          <TableCell align="center" padding="none" align="right" colSpan={3}>
             {editable && (
               <IconButton
                 aria-label="swap"
