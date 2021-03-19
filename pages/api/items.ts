@@ -60,7 +60,7 @@ async function post(req: NextApiRequest, res: NextApiResponse<Item>) {
 
 async function getItems(db: FirebaseFirestore.Firestore) {
   console.time('firestore:getItems');
-  const snapshot = await db.collection('items').orderBy('title').get();
+  const snapshot = await db.collection('items').get();
   console.timeEnd('firestore:getItems');
   return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Item));
 }
