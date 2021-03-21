@@ -88,7 +88,7 @@ export default function TableItem({ index, item }: Props) {
       ) : (
         <>
           <TableCell align="right" padding="none" colSpan={3}>
-            {isEditting && (
+            {!isEditting && (
               <IconButton
                 aria-label="swap"
                 size="small"

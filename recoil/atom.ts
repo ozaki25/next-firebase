@@ -25,5 +25,5 @@ export const tmpItemsState = atom<Item[]>({
 
 export const editState = atom<boolean>({
   key: editStateKey,
-  default: true,
+  default: false,
 });

@@ -10,12 +10,10 @@ import {
 } from '@material-ui/core';
 
 import ItemsTableRow from './ItemsTableRow';
-import { editState, itemsState, tmpItemsState } from '../recoil/atom';
+import { displayedItemsSelector } from '../recoil/selector';
 
 function ItemsTable() {
-  const items = useRecoilValue(itemsState);
-  const tmpItems = useRecoilValue(tmpItemsState);
-  const isEditting = useRecoilValue(editState);
+  const items = useRecoilValue(displayedItemsSelector);
 
   return (
     <TableContainer component={Paper}>
@@ -30,7 +28,7 @@ function ItemsTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {(isEditting ? items : tmpItems).map((item, i) => (
+          {items.map((item, i) => (
             <ItemsTableRow key={item.id} index={i + 1} item={item} />
           ))}
         </TableBody>
