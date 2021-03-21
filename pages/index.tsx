@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import {
@@ -11,6 +12,7 @@ import { Add } from '@material-ui/icons';
 
 import ItemsTable from '../components/ItemsTable';
 import { Item } from '../interfaces';
+import { setInitItems } from '../recoil/atom';
 
 interface Props {
   items: Item[];
@@ -32,6 +34,10 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function Home({ items }: Props) {
   const classes = useStyles();
 
+  useMemo(() => {
+    setInitItems(items);
+  }, []);
+
   return (
     <>
       <Head>
@@ -43,7 +49,7 @@ export default function Home({ items }: Props) {
         disableGutters={true}
         className={classes.container}
       >
-        <ItemsTable items={items} />
+        <ItemsTable />
         <Link href="/items/new" passHref>
           <Fab color="primary" aria-label="add" className={classes.fab}>
             <Add />

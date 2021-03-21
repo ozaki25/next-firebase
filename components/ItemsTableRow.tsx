@@ -1,62 +1,61 @@
-import { MouseEvent, useState } from 'react';
+import { useCallback, useState } from 'react';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { IconButton, TableCell, TableRow } from '@material-ui/core';
 import {
   ArrowDownward,
   ArrowUpward,
-  Check,
   CheckCircle,
-  Clear,
   SwapVert,
 } from '@material-ui/icons';
 
 import { Item } from '../interfaces';
+import {
+  startEditSelector,
+  endEditSelector,
+  swapUpSelector,
+} from '../recoil/selector';
+import { editState } from '../recoil/atom';
+import { swapDownSelector } from '../recoil/selector';
 
 interface Props {
   index: number;
   item: Item;
-  editable: boolean;
-  startEdit: () => void;
-  endEdit: () => void;
-  swapUp: (item: Item) => void;
-  swapDown: (item: Item) => void;
 }
 
-export default function TableItem({
-  index,
-  item,
-  editable,
-  startEdit,
-  endEdit,
-  swapUp,
-  swapDown,
-}: Props) {
-  const [isEditting, setIsEditing] = useState<boolean>(false);
+export default function TableItem({ index, item }: Props) {
+  const [editable, setEditable] = useState<boolean>(false);
 
-  const onClickSwapStart = (event: MouseEvent<HTMLButtonElement>) => {
-    setIsEditing(true);
+  const isEditting = useRecoilValue(editState);
+  const startEdit = useSetRecoilState(startEditSelector);
+  const endEdit = useSetRecoilState(endEditSelector);
+  const swapUp = useSetRecoilState(swapUpSelector);
+  const swapDown = useSetRecoilState(swapDownSelector);
+
+  const onClickSwapStart = useCallback(() => {
+    setEditable(true);
     startEdit();
-  };
+  }, []);
 
-  const onClickSubmit = (event: MouseEvent<HTMLButtonElement>) => {
-    setIsEditing(false);
+  const onClickSubmit = useCallback(() => {
+    setEditable(false);
     endEdit();
-  };
+  }, []);
 
-  const onClickSwapUp = (event: MouseEvent<HTMLButtonElement>) => {
+  const onClickSwapUp = useCallback(() => {
     swapUp(item);
-  };
+  }, [item]);
 
-  const onClickSwapDown = (event: MouseEvent<HTMLButtonElement>) => {
+  const onClickSwapDown = useCallback(() => {
     swapDown(item);
-  };
+  }, [item]);
 
   return (
-    <TableRow hover={true} selected={isEditting}>
+    <TableRow hover={true} selected={editable}>
       <TableCell>{index}</TableCell>
       <TableCell padding="none">
         <a href={item.url}>{item.title}</a>
       </TableCell>
-      {isEditting ? (
+      {editable ? (
         <>
           <TableCell align="center" padding="none">
             <IconButton
@@ -89,7 +88,7 @@ export default function TableItem({
       ) : (
         <>
           <TableCell align="right" padding="none" colSpan={3}>
-            {editable && (
+            {isEditting && (
               <IconButton
                 aria-label="swap"
                 size="small"
