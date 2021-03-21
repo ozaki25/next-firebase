@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { useRecoilState } from 'recoil';
+import { useEffect } from 'react';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import {
   Paper,
   Table,
@@ -12,7 +12,7 @@ import {
 
 import ItemsTableRow from './ItemsTableRow';
 import { Item } from '../interfaces';
-import { itemsState } from '../recoil/atom';
+import { editState, itemsState, tmpItemsState } from '../recoil/atom';
 
 interface Props {
   items: Item[];
@@ -20,13 +20,9 @@ interface Props {
 
 function ItemsTable({ items: defaultItems }: Props) {
   const [items, setItems] = useRecoilState(itemsState);
-  const [tmpItems, setTmpItems] = useState<Item[]>([]);
-  const [isEditting, setIsEditing] = useState<boolean>(false);
-
-  const startEdit = () => {
-    setIsEditing(true);
-    setTmpItems(items);
-  };
+  const [tmpItems, setTmpItems] = useRecoilState(tmpItemsState);
+  const [isEditting, setIsEditing] = useRecoilState(editState);
+  const startEdit = useSetRecoilState(editState);
 
   const endEdit = async () => {
     const ids = tmpItems.map(({ id }) => id);
