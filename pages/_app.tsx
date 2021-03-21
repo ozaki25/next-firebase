@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
+import { RecoilRoot } from 'recoil';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -32,7 +33,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <CssBaseline />
-      <Component {...pageProps} />
+      <RecoilRoot>
+        <Component {...pageProps} />
+      </RecoilRoot>
     </>
   );
 }
