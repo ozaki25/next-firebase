@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRecoilState } from 'recoil';
 import {
   Paper,
   Table,
@@ -11,13 +12,14 @@ import {
 
 import ItemsTableRow from './ItemsTableRow';
 import { Item } from '../interfaces';
+import { itemsState } from '../recoil/atom';
 
 interface Props {
   items: Item[];
 }
 
 function ItemsTable({ items: defaultItems }: Props) {
-  const [items, setItems] = useState<Item[]>(defaultItems);
+  const [items, setItems] = useRecoilState(itemsState);
   const [tmpItems, setTmpItems] = useState<Item[]>([]);
   const [isEditting, setIsEditing] = useState<boolean>(false);
 
@@ -57,6 +59,10 @@ function ItemsTable({ items: defaultItems }: Props) {
     [newItems[i], newItems[i + 1]] = [tmpItems[i + 1], tmpItems[i]];
     setTmpItems(newItems);
   };
+
+  useEffect(() => {
+    setItems(defaultItems);
+  }, []);
 
   return (
     <TableContainer component={Paper}>
