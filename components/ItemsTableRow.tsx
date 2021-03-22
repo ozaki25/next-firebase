@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { IconButton, TableCell, TableRow } from '@material-ui/core';
 import {
   ArrowDownward,
@@ -9,13 +9,7 @@ import {
 } from '@material-ui/icons';
 
 import { Item } from '../interfaces';
-import {
-  startEditSelector,
-  endEditSelector,
-  swapUpSelector,
-} from '../recoil/selector';
-import { editState } from '../recoil/atom';
-import { swapDownSelector } from '../recoil/selector';
+import { editState, itemsState, tmpItemsState } from '../recoil/atom';
 
 interface Props {
   index: number;
@@ -24,30 +18,48 @@ interface Props {
 
 export default function TableItem({ index, item }: Props) {
   const [editable, setEditable] = useState<boolean>(false);
-
-  const isEditting = useRecoilValue(editState);
-  const startEdit = useSetRecoilState(startEditSelector);
-  const endEdit = useSetRecoilState(endEditSelector);
-  const swapUp = useSetRecoilState(swapUpSelector);
-  const swapDown = useSetRecoilState(swapDownSelector);
+  const [isEditting, setIsEditing] = useRecoilState(editState);
+  const [items, setItems] = useRecoilState(itemsState);
+  const [tmpItems, setTmpItems] = useRecoilState(tmpItemsState);
 
   const onClickSwapStart = useCallback(() => {
     setEditable(true);
-    startEdit();
-  }, []);
+    setIsEditing(true);
+    setTmpItems(items);
+  }, [items]);
 
-  const onClickSubmit = useCallback(() => {
-    setEditable(false);
-    endEdit();
-  }, []);
+  const onClickSwapEnd = useCallback(async () => {
+    const ids = tmpItems.map(({ id }) => id);
+    try {
+      await fetch('/api/items-order', {
+        method: 'POST',
+        body: JSON.stringify(ids),
+      });
+      setItems(tmpItems);
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setEditable(false);
+      setIsEditing(false);
+      setTmpItems([]);
+    }
+  }, [tmpItems]);
 
   const onClickSwapUp = useCallback(() => {
-    swapUp(item);
-  }, [item]);
+    const i = tmpItems.findIndex(({ id }) => item.id === id);
+    if ([-1, 0].includes(i)) return;
+    const newItems = [...tmpItems];
+    [newItems[i], newItems[i - 1]] = [tmpItems[i - 1], tmpItems[i]];
+    setTmpItems(newItems);
+  }, [tmpItems]);
 
   const onClickSwapDown = useCallback(() => {
-    swapDown(item);
-  }, [item]);
+    const i = tmpItems.findIndex(({ id }) => item.id === id);
+    if ([-1, tmpItems.length - 1].includes(i)) return;
+    const newItems = [...tmpItems];
+    [newItems[i], newItems[i + 1]] = [tmpItems[i + 1], tmpItems[i]];
+    setTmpItems(newItems);
+  }, [tmpItems]);
 
   return (
     <TableRow hover={true} selected={editable}>
@@ -79,7 +91,7 @@ export default function TableItem({ index, item }: Props) {
             <IconButton
               aria-label="submit"
               size="small"
-              onClick={onClickSubmit}
+              onClick={onClickSwapEnd}
             >
               <CheckCircle color="primary" />
             </IconButton>
