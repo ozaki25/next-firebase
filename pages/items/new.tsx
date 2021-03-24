@@ -69,14 +69,16 @@ export default function NewItem() {
                   required
                 />
               </FormGroup>
-              <Button
-                type="submit"
-                color="primary"
-                variant="contained"
-                fullWidth
-              >
-                作成
-              </Button>
+              <Box mt={2}>
+                <Button
+                  type="submit"
+                  color="primary"
+                  variant="contained"
+                  fullWidth
+                >
+                  作成
+                </Button>
+              </Box>
             </form>
           </Box>
         </Paper>
