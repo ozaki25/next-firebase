@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { IconButton, TableCell, TableRow } from '@material-ui/core';
 import {
@@ -16,7 +16,7 @@ interface Props {
   item: Item;
 }
 
-export default function TableItem({ index, item }: Props) {
+export default memo(function TableItem({ index, item }: Props) {
   const [editable, setEditable] = useState<boolean>(false);
   const [isEditting, setIsEditing] = useRecoilState(editState);
   const [items, setItems] = useRecoilState(itemsState);
@@ -114,4 +114,4 @@ export default function TableItem({ index, item }: Props) {
       )}
     </TableRow>
   );
-}
+});
