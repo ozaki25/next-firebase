@@ -10,9 +10,9 @@ import {
 } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
 
-import ItemsTable from '../components/ItemsTable';
-import { Item } from '../interfaces';
-import { setInitItems } from '../recoil/atom';
+import ItemsTable from '../../components/ItemsTable';
+import { Item } from '../../interfaces';
+import { setInitItems } from '../../recoil/atom';
 
 interface Props {
   items: Item[];
