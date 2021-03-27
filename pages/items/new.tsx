@@ -4,9 +4,7 @@ import Link from 'next/link';
 import {
   Box,
   Button,
-  Checkbox,
   Container,
-  FormControlLabel,
   FormGroup,
   Paper,
   TextField,
