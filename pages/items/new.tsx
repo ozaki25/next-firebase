@@ -82,7 +82,7 @@ export default function NewItem() {
             </form>
           </Box>
         </Paper>
-        <Link href="/" passHref>
+        <Link href="/items" passHref>
           <Button>一覧へ</Button>
         </Link>
       </Container>
